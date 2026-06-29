@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20260630 Homework - Online Worksheet</title>
+    <style>
+        :root {
+            --pink-color: #4A90E2; 
+            --pink-hover: #357ABD;
+            --green-color: #7CB342;
+            --green-hover: #689F38;
+            --bg-color: #F9F9F9;
+            --card-bg: #FFFFFF;
+            --text-color: #333333;
+        }
+        body {
+            font-family: "BiauKai", "DFKai-SB", "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            margin: 0;
+            padding: 15px;
+            font-size: 0.95rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .student-info-panel {
+            background: #FFF3E0;
+            border-left: 6px solid #FF9800;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.05rem;
+        }
+        .student-info-panel label { font-weight: bold; color: #E65100; }
+        .student-info-panel input[type="text"] {
+            padding: 5px 10px; font-size: 0.95rem; border: 2px solid #FFB74D; border-radius: 6px; width: 260px; outline: none;
+            font-family: "BiauKai", "DFKai-SB", sans-serif;
+        }
+        h1 { text-align: center; color: var(--pink-color); margin-bottom: 20px; border-bottom: 2px dashed var(--pink-color); padding-bottom: 10px; font-size: 1.6rem; }
+        h2 { color: var(--text-color); display: flex; align-items: center; gap: 10px; font-size: 1.3rem; margin-top: 25px; background: #F0F4C3; padding: 8px 15px; border-radius: 8px; }
+        h3 { color: var(--pink-color); margin-top: 18px; margin-bottom: 6px; border-bottom: 1px solid #ddd; padding-bottom: 4px; font-size: 1.1rem; }
+        p { font-size: 0.95rem; margin: 8px 0; }
+        .audio-btn { background-color: var(--green-color); color: white; border: none; padding: 4px 10px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px; font-family: sans-serif; }
+        .audio-btn:hover { background-color: var(--green-hover); }
+        .quiz-group { margin-bottom: 15px; padding: 12px; border-left: 6px solid var(--pink-color); background: #EBF3FB; border-radius: 0 8px 8px 0; }
+        .quiz-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .options-container { display: flex; gap: 8px; flex-wrap: wrap; }
+        .option-label { background: white; border: 1px solid #ddd; padding: 5px 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-size: 1.0rem; font-family: sans-serif; }
+        .quiz-group[id^="p2a"] .option-label, .quiz-group[id^="p4"] .option-label { font-family: "BiauKai", "DFKai-SB", sans-serif; }
+        .option-label:hover { border-color: var(--pink-color); background: #EBF3FB; }
+        input[type="radio"] { display: none; }
+        input[type="radio"]:checked + .option-label { background-color: var(--pink-color); color: white; border-color: var(--pink-color); }
+        .feedback-text { margin-top: 8px; font-size: 0.95rem; font-weight: bold; padding: 4px 8px; border-radius: 4px; display: none; }
+        .correct-banner { background-color: #E8F5E9; color: #2E7D32; border-left: 4px solid #4CAF50; }
+        .incorrect-banner { background-color: #FFEBEE; color: #C62828; border-left: 4px solid #F44336; }
+        .general-audio-container { margin: 10px 0; display: flex; align-items: center; gap: 10px; background: #FAFAFA; padding: 8px; border-radius: 6px; border: 1px solid #E0E0E0; font-size: 0.95rem; }
+        .general-audio-container audio { flex-grow: 1; max-width: 400px; height: 32px; }
+        .word-bank { display: flex; gap: 12px; background: #FFF9C4; padding: 8px 15px; border-radius: 8px; border: 1px solid #FFF59D; margin-bottom: 15px; font-weight: bold; font-size: 1.05rem; flex-wrap: wrap; }
+        .submit-panel { text-align: center; margin-top: 30px; }
+        .btn-submit { background-color: var(--pink-color); color: white; font-size: 1.05rem; border: none; padding: 8px 30px; border-radius: 30px; cursor: pointer; box-shadow: 0 3px 5px rgba(0,0,0,0.1); font-family: "BiauKai", "DFKai-SB", sans-serif; }
+        .btn-submit:hover { background-color: var(--pink-hover); }
+        .btn-submit:disabled { background-color: #A0A0A0; cursor: not-allowed; }
+        .report-box { margin-top: 20px; background: #F5F5F5; border: 1px solid #E0E0E0; border-radius: 8px; padding: 15px; text-align: left; display: none; font-size: 0.95rem; }
+        .report-textarea { width: 100%; height: 140px; font-family: monospace; font-size: 0.85rem; padding: 6px; box-sizing: border-box; border: 1px solid #CCC; border-radius: 4px; background-color: #FFF; resize: none; }
+        .btn-copy { background-color: var(--green-color); color: white; border: none; padding: 6px 18px; border-radius: 4px; font-size: 0.9rem; font-weight: bold; cursor: pointer; margin-top: 8px; font-family: "BiauKai", "DFKai-SB", sans-serif; }
+        .copy-toast { margin-left: 10px; color: var(--pink-color); font-weight: bold; display: none; }
+        
+        .match-bank { background: #FFF9C4; border: 1px solid #FFF59D; border-radius: 8px; padding: 8px; margin-bottom: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-weight: 500; font-size: 1.05rem; }
+        .match-select { padding: 4px 8px; font-size: 0.95rem; border: 2px solid #ddd; border-radius: 6px; outline: none; background: white; cursor: pointer; max-width: 100%; font-family: "BiauKai", "DFKai-SB", sans-serif; font-weight: bold; color: #333; }
+        .match-select:focus { border-color: var(--pink-color); }
+
+        .reading-passage { background-color: #F5F5F5; border-left: 6px solid var(--pink-color); padding: 15px; border-radius: 4px; margin-bottom: 20px; font-size: 1.15rem; text-align: justify; letter-spacing: 0.06em; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>20260630 Homework</h1>
+
+    <div class="student-info-panel">
+        <label for="studentName">👤 學生姓名 (Name): </label>
+        <input type="text" id="studentName" placeholder="請輸入您的中文或英文全名">
+    </div>
+
+    <form id="quizForm">
+        <h2>Part 1: Listen and choose the correct Pinyin and tone</h2>
+        <p>Please click the green audio button to listen, then select the correct Pinyin and tone.</p>
+
+        <div class="quiz-group">
+            <div class="quiz-title">1. 伯母 <button type="button" class="audio-btn" onclick="speak('伯母')">🔊 Play</button></div>
+            <div class="options-container">
+                <input type="radio" name="q1" id="q1_a" value="A"><label for="q1_a" class="option-label">bómǔ</label>
+                <input type="radio" name="q1" id="q1_b" value="B"><label for="q1_b" class="option-label">bòmǔ</label>
+                <input type="radio" name="q1" id="q1_c" value="C"><label for="q1_c" class="option-label">bómū</label>
+            </div><div id="feedback_q1" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">2. 老師 <button type="button" class="audio-btn" onclick="speak('老師')">🔊 Play</button></div>
+            <div class="options-container">
+                <input type="radio" name="q2" id="q2_a" value="A"><label for="q2_a" class="option-label">lǎoshī</label>
+                <input type="radio" name="q2" id="q2_b" value="B"><label for="q2_b" class="option-label">laóshī</label>
+                <input type="radio" name="q2" id="q2_c" value="C"><label for="q2_c" class="option-label">lǎoshí</label>
+            </div><div id="feedback_q2" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">3. 兄弟 <button type="button" class="audio-btn" onclick="speak('兄弟')">🔊 Play</button></div>
+            <div class="options-container">
+                <input type="radio" name="q3" id="q3_a" value="A"><label for="q3_a" class="option-label">xiōngdì</label>
+                <input type="radio" name="q3" id="q3_b" value="B"><label for="q3_b" class="option-label">xiōngdi</label>
+                <input type="radio" name="q3" id="q3_c" value="C"><label for="q3_c" class="option-label">xióngdì</label>
+            </div><div id="feedback_q3" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">4. 姐妹 <button type="button" class="audio-btn" onclick="speak('姐妹')">🔊 Play</button></div>
+            <div class="options-container">
+                <input type="radio" name="q4" id="q4_a" value="A"><label for="q4_a" class="option-label">jiěmèi</label>
+                <input type="radio" name="q4" id="q4_b" value="B"><label for="q4_b" class="option-label">jiēmèi</label>
+                <input type="radio" name="q4" id="q4_c" value="C"><label for="q4_c" class="option-label">jiěmēi</label>
+            </div><div id="feedback_q4" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">5. 名字 <button type="button" class="audio-btn" onclick="speak('名字')">🔊 Play</button></div>
+            <div class="options-container">
+                <input type="radio" name="q5" id="q5_a" value="A"><label for="q5_a" class="option-label">mǐngzì</label>
+                <input type="radio" name="q5" id="q5_b" value="B"><label for="q5_b" class="option-label">míngzi</label>
+                <input type="radio" name="q5" id="q5_c" value="C"><label for="q5_c" class="option-label">mǐngzǐ</label>
+            </div><div id="feedback_q5" class="feedback-text"></div>
+        </div>
+
+
+        <h2>Part 2: Listening Comprehension</h2>
+        
+        <h3>題目 A：Listen to the dialogue. Place a ◯ if the statement is true or an ✕ if the statement is false.</h3>
+        <div class="general-audio-container">
+            <strong>Audio Track 02-4:</strong> <audio controls id="audio_p2a"></audio>
+        </div>
+        <p>Listen to the audio track and determine whether the statements are true or false.</p>
+
+        <div class="quiz-group" id="p2a_g1">
+            <div class="quiz-title">1. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 他們都姓李。</div>
+            <div class="options-container">
+                <input type="radio" name="p2a_q1" id="p2a_q1_o" value="O"><label for="p2a_q1_o" class="option-label">◯ True</label>
+                <input type="radio" name="p2a_q1" id="p2a_q1_x" value="X"><label for="p2a_q1_x" class="option-label">✕ False</label>
+            </div><div id="feedback_p2a_q1" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group" id="p2a_g2">
+            <div class="quiz-title">2. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 這不是陳小姐的房子。</div>
+            <div class="options-container">
+                <input type="radio" name="p2a_q2" id="p2a_q2_o" value="O"><label for="p2a_q2_o" class="option-label">◯ True</label>
+                <input type="radio" name="p2a_q2" id="p2a_q2_x" value="X"><label for="p2a_q2_x" class="option-label">✕ False</label>
+            </div><div id="feedback_p2a_q2" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group" id="p2a_g3_1">
+            <div class="quiz-title">3-1. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 他們都喜歡看書。</div>
+            <div class="options-container">
+                <input type="radio" name="p2a_q3_1" id="p2a_q3_1_o" value="O"><label for="p2a_q3_1_o" class="option-label">◯ True</label>
+                <input type="radio" name="p2a_q3_1" id="p2a_q3_1_x" value="X"><label for="p2a_q3_1_x" class="option-label">✕ False</label>
+            </div><div id="feedback_p2a_q3_1" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group" id="p2a_g3_2">
+            <div class="quiz-title">3-2. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 他們都不喜歡照相。</div>
+            <div class="options-container">
+                <input type="radio" name="p2a_q3_2" id="p2a_q3_2_o" value="O"><label for="p2a_q3_2_o" class="option-label">◯ True</label>
+                <input type="radio" name="p2a_q3_2" id="p2a_q3_2_x" value="X"><label for="p2a_q3_2_x" class="option-label">✕ False</label>
+            </div><div id="feedback_p2a_q3_2" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group" id="p2a_g4_1">
+            <div class="quiz-title">4-1. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 李小姐的家有三個人。</div>
+            <div class="options-container">
+                <input type="radio" name="p2a_q4_1" id="p2a_q4_1_o" value="O"><label for="p2a_q4_1_o" class="option-label">◯ True</label>
+                <input type="radio" name="p2a_q4_1" id="p2a_q4_1_x" value="X"><label for="p2a_q4_1_x" class="option-label">✕ False</label>
+            </div><div id="feedback_p2a_q4_1" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group" id="p2a_g4_2">
+            <div class="quiz-title">4-2. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 他們都沒有兄弟姐妹。</div>
+            <div class="options-container">
+                <input type="radio" name="p2a_q4_2" id="p2a_q4_2_o" value="O"><label for="p2a_q4_2_o" class="option-label">◯ True</label>
+                <input type="radio" name="p2a_q4_2" id="p2a_q4_2_x" value="X"><label for="p2a_q4_2_x" class="option-label">✕ False</label>
+            </div><div id="feedback_p2a_q4_2" class="feedback-text"></div>
+        </div>
+
+
+        <h2>Part 3: Match the sentences</h2>
+        <p>Match the sentences in the column on the left with the appropriate sentences from the column on the right.</p>
+        
+        <div class="match-bank">
+            <div>(A) 沒有。</div>
+            <div>(E) 我哥哥。</div>
+            <div>(B) 不是。</div>
+            <div>(F) 好，謝謝你。</div>
+            <div>(C) 六個。</div>
+            <div>(G) 是的，他們都喜歡。</div>
+            <div>(D) 不客氣。</div>
+            <div>(H) 不是，我媽媽是臺灣人。</div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                1. 
+                <select name="p3_q1" class="match-select">
+                    <option value="">-- Choose an answer --</option>
+                    <option value="A">A. 沒有。</option>
+                    <option value="B">B. 不是。</option>
+                    <option value="C">C. 六個。</option>
+                    <option value="D">D. 不客氣。</option>
+                    <option value="E">E. 我哥哥。</option>
+                    <option value="F">F. 好，謝謝你。</option>
+                    <option value="G">G. 是的，他們都喜歡。</option>
+                    <option value="H">H. 不是，我媽媽是臺灣人。</option>
+                </select>
+                &nbsp;&nbsp;這是誰？
+            </div>
+            <div id="feedback_p3_q1" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                2. 
+                <select name="p3_q2" class="match-select">
+                    <option value="">-- Choose an answer --</option>
+                    <option value="A">A. 沒有。</option>
+                    <option value="B">B. 不是。</option>
+                    <option value="C">C. 六個。</option>
+                    <option value="D">D. 不客氣。</option>
+                    <option value="E">E. 我哥哥。</option>
+                    <option value="F">F. 好，謝謝你。</option>
+                    <option value="G">G. 是的，他們都喜歡。</option>
+                    <option value="H">H. 不是，我媽媽是臺灣人。</option>
+                </select>
+                &nbsp;&nbsp;陳先生的家有幾個人？
+            </div>
+            <div id="feedback_p3_q2" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                3. 
+                <select name="p3_q3" class="match-select">
+                    <option value="">-- Choose an answer --</option>
+                    <option value="A">A. 沒有。</option>
+                    <option value="B">B. 不是。</option>
+                    <option value="C">C. 六個。</option>
+                    <option value="D">D. 不客氣。</option>
+                    <option value="E">E. 我哥哥。</option>
+                    <option value="F">F. 好，謝謝你。</option>
+                    <option value="G">G. 是的，他們都喜歡。</option>
+                    <option value="H">H. 不是，我媽媽是臺灣人。</option>
+                </select>
+                &nbsp;&nbsp;請問你要不要喝茶？
+            </div>
+            <div id="feedback_p3_q3" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                4. 
+                <select name="p3_q4" class="match-select">
+                    <option value="">-- Choose an answer --</option>
+                    <option value="A">A. 沒有。</option>
+                    <option value="B">B. 不是。</option>
+                    <option value="C">C. 六個。</option>
+                    <option value="D">D. 不客氣。</option>
+                    <option value="E">E. 我哥哥。</option>
+                    <option value="F">F. 好，謝謝你。</option>
+                    <option value="G">G. 是的，他們都喜歡。</option>
+                    <option value="H">H. 不是，我媽媽是臺灣人。</option>
+                </select>
+                &nbsp;&nbsp;你爸爸媽媽都是日本人嗎？
+            </div>
+            <div id="feedback_p3_q4" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                5. 
+                <select name="p3_q5" class="match-select">
+                    <option value="">-- Choose an answer --</option>
+                    <option value="A">A. 沒有。</option>
+                    <option value="B">B. 不是。</option>
+                    <option value="C">C. 六個。</option>
+                    <option value="D">D. 不客氣。</option>
+                    <option value="E">E. 我哥哥。</option>
+                    <option value="F">F. 好，謝謝你。</option>
+                    <option value="G">G. 是的，他們都喜歡。</option>
+                    <option value="H">H. 不是，我媽媽是臺灣人。</option>
+                </select>
+                &nbsp;&nbsp;王小姐的爸爸是老師嗎？
+            </div>
+            <div id="feedback_p3_q5" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                6. 
+                <select name="p3_q6" class="match-select">
+                    <option value="">-- Choose an answer --</option>
+                    <option value="A">A. 沒有。</option>
+                    <option value="B">B. 不是。</option>
+                    <option value="C">C. 六個。</option>
+                    <option value="D">D. 不客氣。</option>
+                    <option value="E">E. 我哥哥。</option>
+                    <option value="F">F. 好，謝謝你。</option>
+                    <option value="G">G. 是的，他們都喜歡。</option>
+                    <option value="H">H. 不是，我媽媽是臺灣人。</option>
+                </select>
+                &nbsp;&nbsp;你有沒有你家人的照片？
+            </div>
+            <div id="feedback_p3_q6" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                7. 
+                <select name="p3_q7" class="match-select">
+                    <option value="">-- Choose an answer --</option>
+                    <option value="A">A. 沒有。</option>
+                    <option value="B">B. 不是。</option>
+                    <option value="C">C. 六個。</option>
+                    <option value="D">D. 不客氣。</option>
+                    <option value="E">E. 我哥哥。</option>
+                    <option value="F">F. 好，謝謝你。</option>
+                    <option value="G">G. 是的，他們都喜歡。</option>
+                    <option value="H">H. 不是，我媽媽是臺灣人。</option>
+                </select>
+                &nbsp;&nbsp;李小姐的兄弟姐妹都喜歡看書嗎？
+            </div>
+            <div id="feedback_p3_q7" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                8. 
+                <select name="p3_q8" class="match-select">
+                    <option value="">-- Choose an answer --</option>
+                    <option value="A">A. 沒有。</option>
+                    <option value="B">B. 不是。</option>
+                    <option value="C">C. 六個。</option>
+                    <option value="D">D. 不客氣。</option>
+                    <option value="E">E. 我哥哥。</option>
+                    <option value="F">F. 好，謝謝你。</option>
+                    <option value="G">G. 是的，他們都喜歡。</option>
+                    <option value="H">H. 不是，我媽媽是臺灣人。</option>
+                </select>
+                &nbsp;&nbsp;謝謝你們來接我。
+            </div>
+            <div id="feedback_p3_q8" class="feedback-text"></div>
+        </div>
+
+
+        <h2>Part 4: Reading Comprehension</h2>
+        <p>Wang Kaiwen introduces his family:</p>
+        
+        <div class="reading-passage">
+            你們好，我叫王開文，我、我爸爸都是美國人，我媽媽是臺灣人，我沒有兄弟姐妹。我爸爸媽媽都喜歡喝茶、看書。我家有很多茶，有很多書。我喜歡照相，我家有很多很漂亮的照片。
+        </div>
+        
+        <p>Look at the statements below. Place a ◯ if the statement is true or an ✕ if the statement is false.</p>
+
+        <div class="quiz-group" id="p4_g1">
+            <div class="quiz-title">1. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 王先生的家有三個人。</div>
+            <div class="options-container">
+                <input type="radio" name="p4_q1" id="p4_q1_o" value="O"><label for="p4_q1_o" class="option-label">◯ True</label>
+                <input type="radio" name="p4_q1" id="p4_q1_x" value="X"><label for="p4_q1_x" class="option-label">✕ False</label>
+            </div><div id="feedback_p4_q1" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group" id="p4_g2">
+            <div class="quiz-title">2. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 王先生有妹妹。</div>
+            <div class="options-container">
+                <input type="radio" name="p4_q2" id="p4_q2_o" value="O"><label for="p4_q2_o" class="option-label">◯ True</label>
+                <input type="radio" name="p4_q2" id="p4_q2_x" value="X"><label for="p4_q2_x" class="option-label">✕ False</label>
+            </div><div id="feedback_p4_q2" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group" id="p4_g3">
+            <div class="quiz-title">3. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 王先生的爸爸媽媽都喜歡照相。</div>
+            <div class="options-container">
+                <input type="radio" name="p4_q3" id="p4_q3_o" value="O"><label for="p4_q3_o" class="option-label">◯ True</label>
+                <input type="radio" name="p4_q3" id="p4_q3_x" value="X"><label for="p4_q3_x" class="option-label">✕ False</label>
+            </div><div id="feedback_p4_q3" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group" id="p4_g4">
+            <div class="quiz-title">4. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 王先生的家有很多照片、書。</div>
+            <div class="options-container">
+                <input type="radio" name="p4_q4" id="p4_q4_o" value="O"><label for="p4_q4_o" class="option-label">◯ True</label>
+                <input type="radio" name="p4_q4" id="p4_q4_x" value="X"><label for="p4_q4_x" class="option-label">✕ False</label>
+            </div><div id="feedback_p4_q4" class="feedback-text"></div>
+        </div>
+
+
+        <h2>Part 5: Fill in the Blanks</h2>
+        <p>Fill in the blanks using the words provided.</p>
+
+        <div class="match-bank">
+            <div>a. 個</div>
+            <div>b. 張</div>
+            <div>c. 本</div>
+            <div>d. 杯</div>
+            <div>e. 棟</div>
+            <div>f. 位</div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                1. 這兩
+                <select name="p5_q1" class="match-select">
+                    <option value="">-- Measure Word --</option>
+                    <option value="a">a. 個</option><option value="b">b. 張</option><option value="c">c. 本</option><option value="d">d. 杯</option><option value="e">e. 棟</option><option value="f">f. 位</option>
+                </select>
+                日本小姐很漂亮。
+            </div>
+            <div id="feedback_p5_q1" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                2. 我有五
+                <select name="p5_q2" class="match-select">
+                    <option value="">-- Measure Word --</option>
+                    <option value="a">a. 個</option><option value="b">b. 張</option><option value="c">c. 本</option><option value="d">d. 杯</option><option value="e">e. 棟</option><option value="f">f. 位</option>
+                </select>
+                書。
+            </div>
+            <div id="feedback_p5_q2" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                3. 這
+                <select name="p5_q3" class="match-select">
+                    <option value="">-- Measure Word --</option>
+                    <option value="a">a. 個</option><option value="b">b. 張</option><option value="c">c. 本</option><option value="d">d. 杯</option><option value="e">e. 棟</option><option value="f">f. 位</option>
+                </select>
+                茶很好喝。
+            </div>
+            <div id="feedback_p5_q3" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                4. 陳小姐有五
+                <select name="p5_q4" class="match-select">
+                    <option value="">-- Measure Word --</option>
+                    <option value="a">a. 個</option><option value="b">b. 張</option><option value="c">c. 本</option><option value="d">d. 杯</option><option value="e">e. 棟</option><option value="f">f. 位</option>
+                </select>
+                照片。
+            </div>
+            <div id="feedback_p5_q4" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                5. 他有三
+                <select name="p5_q5" class="match-select">
+                    <option value="">-- Measure Word --</option>
+                    <option value="a">a. 個</option><option value="b">b. 張</option><option value="c">c. 本</option><option value="d">d. 杯</option><option value="e">e. 棟</option><option value="f">f. 位</option>
+                </select>
+                弟弟。
+            </div>
+            <div id="feedback_p5_q5" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                6. 這
+                <select name="p5_q6" class="match-select">
+                    <option value="">-- Measure Word --</option>
+                    <option value="a">a. 個</option><option value="b">b. 張</option><option value="c">c. 本</option><option value="d">d. 杯</option><option value="e">e. 棟</option><option value="f">f. 位</option>
+                </select>
+                房子很好看。
+            </div>
+            <div id="feedback_p5_q6" class="feedback-text"></div>
+        </div>
+
+        <div class="quiz-group">
+            <div class="quiz-title">
+                7. 這裡有三
+                <select name="p5_q7" class="match-select">
+                    <option value="">-- Measure Word --</option>
+                    <option value="a">a. 個</option><option value="b">b. 張</option><option value="c">c. 本</option><option value="d">d. 杯</option><option value="e">e. 棟</option><option value="f">f. 位</option>
+                </select>
+                人。
+            </div>
+            <div id="feedback_p5_q7" class="feedback-text"></div>
+        </div>
+
+
+        <div class="submit-panel">
+            <button type="button" id="submitBtn" class="btn-submit" onclick="checkAnswers()">Submit Worksheet</button>
+            <div id="scoreDisplay" class="score-display" style="font-size: 1.15rem; font-weight: bold; margin-top: 15px; color: var(--pink-color); display: none;"></div>
+        </div>
+
+        <div id="reportBox" class="report-box">
+            <h3>Answer Report</h3>
+            <textarea id="reportText" class="report-textarea" readonly></textarea>
+            <div>
+                <button type="button" class="btn-copy" onclick="copyReportText()">Copy Report</button>
+                <span id="copyToast" class="copy-toast">✓ Copied to clipboard!</span>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    let currentUrl = window.location.href;
+    let audioBase = "";
+
+    if (currentUrl.startsWith('file:///')) {
+        audioBase = ""; 
+    } else {
+        audioBase = currentUrl.substring(0, currentUrl.lastIndexOf('/') + 1);
+    }
+    
+    document.getElementById('audio_p2a').src = audioBase + "02-4.mp3";
+
+    function speak(text) {
+        const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=zh-TW&client=tw-ob&q=${encodeURIComponent(text)}`;
+        const audio = new Audio(url);
+        audio.play().catch(e => {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text); u.lang = 'zh-TW';
+                window.speechSynthesis.speak(u);
+            }
+        });
+    }
+
+    const answers = {
+        q1:'A', q2:'A', q3:'A', q4:'A', q5:'B',
+        p2a_q1:'X', p2a_q2:'O', p2a_q3_1:'X', p2a_q3_2:'X', p2a_q4_1:'O', p2a_q4_2:'X',
+        p3_q1:'E', p3_q2:'C', p3_q3:'F', p3_q4:'H', p3_q5:'B', p3_q6:'A', p3_q7:'G', p3_q8:'D',
+        p4_q1:'O', p4_q2:'X', p4_q3:'X', p4_q4:'O',
+        p5_q1:'f', p5_q2:'c', p5_q3:'d', p5_q4:'b', p5_q5:'a', p5_q6:'e', p5_q7:'a'
+    };
+
+    const labels = {
+        p2a_q1: '✕ False', p2a_q2: '◯ True', p2a_q3_1: '✕ False', p2a_q3_2: '✕ False', p2a_q4_1: '◯ True', p2a_q4_2: '✕ False',
+        p3_q1: '(E) 我哥哥。', p3_q2: '(C) 六個。', p3_q3: '(F) 好，謝謝你。', p3_q4: '(H) 不是，我媽媽是臺灣人。', p3_q5: '(B) 不是。', p3_q6: '(A) 沒有。', p3_q7: '(G) 是的，他們都喜歡。', p3_q8: '(D) 不客氣。',
+        p4_q1: '◯ True', p4_q2: '✕ False', p4_q3: '✕ False', p4_q4: '◯ True',
+        p5_q1: 'f. 位', p5_q2: 'c. 本', p5_q3: 'd. 杯', p5_q4: 'b. 張', p5_q5: 'a. 個', p5_q6: 'e. 棟', p5_q7: 'a. 個'
+    };
+
+    const sheetUrl = "https://script.google.com/macros/s/AKfycbzLwyq1Qk1qGcGz2H86Rn89F2WkiTPUqh89Lmg3oqYRnQok02nInUKSjBh3Re4J9lfx/exec";
+
+    function checkAnswers() {
+        const nameInput = document.getElementById('studentName');
+        const name = nameInput.value.trim();
+        if (!name) { alert("Please enter your name!"); nameInput.focus(); return; }
+
+        let score = 0, total = Object.keys(answers).length;
+        let r1 = [], r2a = [], r3 = [], r4 = [], r5 = [];
+        const form = document.getElementById('quizForm');
+
+        // 檢查 Part 1
+        for(let i=1; i<=5; i++) {
+            const sel = form.querySelector(`input[name="q${i}"]:checked`);
+            const val = sel ? sel.value : "Unanswered";
+            r1.push(`(${i})${val}`);
+            const fb = document.getElementById(`feedback_q${i}`); 
+            fb.style.display = 'inline-block';
+            
+            const cL = answers[`q${i}`];
+            const txt = form.querySelector(`label[for="q${i}_${cL.toLowerCase()}"]`).innerText;
+            if(sel && sel.value === cL) { 
+                score++; 
+                fb.innerHTML="✅ Correct!"; 
+                fb.className="feedback-text correct-banner"; 
+            } else { 
+                fb.innerHTML=`❌ Incorrect. Correct: <strong>${txt}</strong>`; 
+                fb.className="feedback-text incorrect-banner"; 
+            }
+        }
+
+        // 檢查 Part 2 題目 A
+        const p2a_keys = ['q1', 'q2', 'q3_1', 'q3_2', 'q4_1', 'q4_2'];
+        p2a_keys.forEach(key => {
+            const sel = form.querySelector(`input[name="p2a_${key}"]:checked`);
+            const val = sel ? sel.value : "Unanswered";
+            r2a.push(`(A-${key.replace('q','').replace('_','-').toUpperCase()})${val}`);
+            const fb = document.getElementById(`feedback_p2a_${key}`);
+            fb.style.display = 'inline-block';
+            
+            if(sel && sel.value === answers[`p2a_${key}`]) {
+                score++;
+                fb.innerHTML="✅ Correct!";
+                fb.className="feedback-text correct-banner";
+            } else {
+                fb.innerHTML=`❌ Incorrect. Correct answer: <strong>${labels['p2a_'+key]}</strong>`;
+                fb.className="feedback-text incorrect-banner";
+            }
+        });
+
+        // 檢查 Part 3
+        for(let i=1; i<=8; i++) {
+            const sel = form.querySelector(`select[name="p3_q${i}"]`);
+            const val = sel && sel.value ? sel.value : "Unanswered";
+            r3.push(`(Match-${i})${val}`);
+            const fb = document.getElementById(`feedback_p3_q${i}`);
+            fb.style.display = 'inline-block';
+            
+            if(sel && sel.value === answers[`p3_q${i}`]) {
+                score++;
+                fb.innerHTML="✅ Correct!";
+                fb.className="feedback-text correct-banner";
+            } else {
+                fb.innerHTML=`❌ Incorrect. Correct answer: <strong>${labels['p3_q'+i]}</strong>`;
+                fb.className="feedback-text incorrect-banner";
+            }
+        }
+
+        // 檢查 Part 4
+        for(let i=1; i<=4; i++) {
+            const sel = form.querySelector(`input[name="p4_q${i}"]:checked`);
+            const val = sel ? sel.value : "Unanswered";
+            r4.push(`(Read-${i})${val}`);
+            const fb = document.getElementById(`feedback_p4_q${i}`);
+            fb.style.display = 'inline-block';
+            
+            if(sel && sel.value === answers[`p4_q${i}`]) {
+                score++;
+                fb.innerHTML="✅ Correct!";
+                fb.className="feedback-text correct-banner";
+            } else {
+                fb.innerHTML=`❌ Incorrect. Correct answer: <strong>${labels['p4_q'+i]}</strong>`;
+                fb.className="feedback-text incorrect-banner";
+            }
+        }
+
+        // 檢查 Part 5
+        for(let i=1; i<=7; i++) {
+            const sel = form.querySelector(`select[name="p5_q${i}"]`);
+            const val = sel && sel.value ? sel.value : "Unanswered";
+            r5.push(`(Fill-${i})${val}`);
+            const fb = document.getElementById(`feedback_p5_q${i}`);
+            fb.style.display = 'inline-block';
+            
+            if(sel && sel.value === answers[`p5_q${i}`]) {
+                score++;
+                fb.innerHTML="✅ Correct!";
+                fb.className="feedback-text correct-banner";
+            } else {
+                fb.innerHTML=`❌ Incorrect. Correct answer: <strong>${labels['p5_q'+i]}</strong>`;
+                fb.className="feedback-text incorrect-banner";
+            }
+        }
+
+        // 顯示總分與產出文字報告
+        document.getElementById('scoreDisplay').innerHTML = `Total Score: ${score} / ${total} pts!`;
+        document.getElementById('scoreDisplay').style.display = 'block';
+        
+        const rep = `👤 Name: ${name}\n🎯 Score: ${score}/${total}\n📝 Part 1: ${r1.join(' ')}\n📝 Part 2-A: ${r2a.join(' ')}\n📝 Part 3: ${r3.join(' ')}\n📝 Part 4: ${r4.join(' ')}\n📝 Part 5: ${r5.join(' ')}`;
+        document.getElementById('reportText').value = rep; 
+        document.getElementById('reportBox').style.display = 'block';
+        document.getElementById('scoreDisplay').scrollIntoView({ behavior: 'smooth' });
+
+        // 表單同步到 Google Sheet
+        const sBtn = document.getElementById('submitBtn');
+        sBtn.disabled = true; 
+        sBtn.innerText = "⌛ Submitting...";
+        
+        fetch(sheetUrl, { 
+            method: "POST", 
+            mode: "no-cors", 
+            headers: { "Content-Type": "application/json" }, 
+            body: JSON.stringify({ 
+                name: name, 
+                score: `${score}/${total}`, 
+                p1: r1.join(' '), 
+                p2: r2a.join(' ') + " | " + r3.join(' ') + " | " + r4.join(' ') + " | " + r5.join(' ')
+            }) 
+        })
+        .then(() => { alert("🚀 Synced successfully!"); sBtn.innerText = "✓ Submitted"; })
+        .catch(() => { alert("⚠️ Network error."); sBtn.disabled = false; sBtn.innerText = "Submit Worksheet"; });
+    }
+
+    function copyReportText() {
+        const t = document.getElementById('reportText'); t.select(); t.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(t.value).then(() => {
+            const toast = document.getElementById('copyToast'); toast.style.display = 'inline';
+            setTimeout(() => toast.style.display = 'none', 3000);
+        });
+    }
+</script>
+</body>
+</html>
