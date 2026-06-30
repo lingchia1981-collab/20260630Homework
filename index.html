@@ -82,6 +82,7 @@
         .match-select:focus { border-color: var(--pink-color); }
 
         .reading-passage { background-color: #F5F5F5; border-left: 6px solid var(--pink-color); padding: 15px; border-radius: 4px; margin-bottom: 20px; font-size: 1.15rem; text-align: justify; letter-spacing: 0.06em; line-height: 1.6; }
+        .passage-audio-btn { margin-left: 8px; vertical-align: middle; }
     </style>
 </head>
 <body>
@@ -229,7 +230,7 @@
                     <option value="G">G. 是的，他們都喜歡。</option>
                     <option value="H">H. 不是，我媽媽是臺灣人。</option>
                 </select>
-                &nbsp;&nbsp;這是誰？
+                &nbsp;&nbsp;這是誰？ <button type="button" class="audio-btn" onclick="speak('這是誰？')">🔊 Play</button>
             </div>
             <div id="feedback_p3_q1" class="feedback-text"></div>
         </div>
@@ -248,7 +249,7 @@
                     <option value="G">G. 是的，他們都喜歡。</option>
                     <option value="H">H. 不是，我媽媽是臺灣人。</option>
                 </select>
-                &nbsp;&nbsp;陳先生的家有幾個人？
+                &nbsp;&nbsp;陳先生的家有幾個人？ <button type="button" class="audio-btn" onclick="speak('陳先生的家有幾個人？')">🔊 Play</button>
             </div>
             <div id="feedback_p3_q2" class="feedback-text"></div>
         </div>
@@ -267,7 +268,7 @@
                     <option value="G">G. 是的，他們都喜歡。</option>
                     <option value="H">H. 不是，我媽媽是臺灣人。</option>
                 </select>
-                &nbsp;&nbsp;請問你要不要喝茶？
+                &nbsp;&nbsp;請問你要不要喝茶？ <button type="button" class="audio-btn" onclick="speak('請問你要不要喝茶？')">🔊 Play</button>
             </div>
             <div id="feedback_p3_q3" class="feedback-text"></div>
         </div>
@@ -286,7 +287,7 @@
                     <option value="G">G. 是的，他們都喜歡。</option>
                     <option value="H">H. 不是，我媽媽是臺灣人。</option>
                 </select>
-                &nbsp;&nbsp;你爸爸媽媽都是日本人嗎？
+                &nbsp;&nbsp;你爸爸媽媽都是日本人嗎？ <button type="button" class="audio-btn" onclick="speak('你爸爸媽媽都是日本人嗎？')">🔊 Play</button>
             </div>
             <div id="feedback_p3_q4" class="feedback-text"></div>
         </div>
@@ -305,7 +306,7 @@
                     <option value="G">G. 是的，他們都喜歡。</option>
                     <option value="H">H. 不是，我媽媽是臺灣人。</option>
                 </select>
-                &nbsp;&nbsp;王小姐的爸爸是老師嗎？
+                &nbsp;&nbsp;王小姐的爸爸是老師嗎？ <button type="button" class="audio-btn" onclick="speak('王小姐的爸爸是老師嗎？')">🔊 Play</button>
             </div>
             <div id="feedback_p3_q5" class="feedback-text"></div>
         </div>
@@ -324,7 +325,7 @@
                     <option value="G">G. 是的，他們都喜歡。</option>
                     <option value="H">H. 不是，我媽媽是臺灣人。</option>
                 </select>
-                &nbsp;&nbsp;你有沒有你家人的照片？
+                &nbsp;&nbsp;你有沒有你家人的照片？ <button type="button" class="audio-btn" onclick="speak('你有有沒有你家人的照片？')">🔊 Play</button>
             </div>
             <div id="feedback_p3_q6" class="feedback-text"></div>
         </div>
@@ -343,7 +344,7 @@
                     <option value="G">G. 是的，他們都喜歡。</option>
                     <option value="H">H. 不是，我媽媽是臺灣人。</option>
                 </select>
-                &nbsp;&nbsp;李小姐的兄弟姐妹都喜歡看書嗎？
+                &nbsp;&nbsp;李小姐的兄弟姐妹都喜歡看書嗎？ <button type="button" class="audio-btn" onclick="speak('李小姐的兄弟姐妹都喜歡看書嗎？')">🔊 Play</button>
             </div>
             <div id="feedback_p3_q7" class="feedback-text"></div>
         </div>
@@ -362,7 +363,7 @@
                     <option value="G">G. 是的，他們都喜歡。</option>
                     <option value="H">H. 不是，我媽媽是臺灣人。</option>
                 </select>
-                &nbsp;&nbsp;謝謝你們來接我。
+                &nbsp;&nbsp;謝謝你們來接我。 <button type="button" class="audio-btn" onclick="speak('謝謝你們來接我。')">🔊 Play</button>
             </div>
             <div id="feedback_p3_q8" class="feedback-text"></div>
         </div>
@@ -372,13 +373,13 @@
         <p>Wang Kaiwen introduces his family:</p>
         
         <div class="reading-passage">
-            你們好，我叫王開文，我、我爸爸都是美國人，我媽媽是臺灣人，我沒有兄弟姐妹。我爸爸媽媽都喜歡喝茶、看書。我家有很多茶，有很多書。我喜歡照相，我家有很多很漂亮的照片。
+            你們好，我叫王開文，我、我爸爸都是美國人，我媽媽是臺灣人，我沒有兄弟姐妹。我爸爸媽媽都喜歡喝茶、看書。我家有很多茶，有很多書。我喜歡照相，我家有很多很漂亮的照片。<button type="button" class="audio-btn passage-audio-btn" onclick="speak('你們好，我叫王開文，我、我爸爸都是美國人，我媽媽是臺灣人，我沒有兄弟姐妹。我爸爸媽媽都喜歡喝茶、看書。我家有很多茶，有很多書。我喜歡照相，我家有很多很漂亮的照片。')">🔊 Play Passage</button>
         </div>
         
         <p>Look at the statements below. Place a ◯ if the statement is true or an ✕ if the statement is false.</p>
 
         <div class="quiz-group" id="p4_g1">
-            <div class="quiz-title">1. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 王先生的家有三個人。</div>
+            <div class="quiz-title">1. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 王先生的家有三個人。 <button type="button" class="audio-btn" onclick="speak('王先生的家有三個人。')">🔊 Play</button></div>
             <div class="options-container">
                 <input type="radio" name="p4_q1" id="p4_q1_o" value="O"><label for="p4_q1_o" class="option-label">◯ True</label>
                 <input type="radio" name="p4_q1" id="p4_q1_x" value="X"><label for="p4_q1_x" class="option-label">✕ False</label>
@@ -386,7 +387,7 @@
         </div>
 
         <div class="quiz-group" id="p4_g2">
-            <div class="quiz-title">2. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 王先生有妹妹。</div>
+            <div class="quiz-title">2. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 王先生有妹妹。 <button type="button" class="audio-btn" onclick="speak('王先生有妹妹。')">🔊 Play</button></div>
             <div class="options-container">
                 <input type="radio" name="p4_q2" id="p4_q2_o" value="O"><label for="p4_q2_o" class="option-label">◯ True</label>
                 <input type="radio" name="p4_q2" id="p4_q2_x" value="X"><label for="p4_q2_x" class="option-label">✕ False</label>
@@ -394,7 +395,7 @@
         </div>
 
         <div class="quiz-group" id="p4_g3">
-            <div class="quiz-title">3. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 王先生的爸爸媽媽都喜歡照相。</div>
+            <div class="quiz-title">3. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 王先生的爸爸媽媽都喜歡照相。 <button type="button" class="audio-btn" onclick="speak('王先生的爸爸媽媽都喜歡照相。')">🔊 Play</button></div>
             <div class="options-container">
                 <input type="radio" name="p4_q3" id="p4_q3_o" value="O"><label for="p4_q3_o" class="option-label">◯ True</label>
                 <input type="radio" name="p4_q3" id="p4_q3_x" value="X"><label for="p4_q3_x" class="option-label">✕ False</label>
@@ -402,7 +403,7 @@
         </div>
 
         <div class="quiz-group" id="p4_g4">
-            <div class="quiz-title">4. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 王先生的家有很多照片、書。</div>
+            <div class="quiz-title">4. ( &nbsp;&nbsp;&nbsp;&nbsp; ) 王先生的家有很多照片、書。 <button type="button" class="audio-btn" onclick="speak('王先生的家有很多照片、書。')">🔊 Play</button></div>
             <div class="options-container">
                 <input type="radio" name="p4_q4" id="p4_q4_o" value="O"><label for="p4_q4_o" class="option-label">◯ True</label>
                 <input type="radio" name="p4_q4" id="p4_q4_x" value="X"><label for="p4_q4_x" class="option-label">✕ False</label>
